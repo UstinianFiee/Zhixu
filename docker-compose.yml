@@ -1,0 +1,44 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: zhixu-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: zhixu_root_2026
+      MYSQL_DATABASE: zhixu
+      MYSQL_USER: zhixu
+      MYSQL_PASSWORD: zhixu_pass_2026
+    ports:
+      - "13306:3306"
+    volumes:
+      - zhixu_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: zhixu-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "mysql+pymysql://zhixu:zhixu_pass_2026@db:3306/zhixu"
+      SECRET_KEY: "zhixu-production-secret-2026-change-me"
+    ports:
+      - "8888:8888"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: zhixu-frontend
+    restart: unless-stopped
+    ports:
+      - "1234:1234"
+    depends_on:
+      - backend
+
+volumes:
+  zhixu_mysql_data:

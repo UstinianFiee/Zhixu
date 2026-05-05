@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+html, body {
+  @apply bg-zhixu-cream text-zhixu-blue min-h-screen;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: 'Noto Serif SC', Georgia, serif;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.slide-enter-from {
+  transform: translateX(20px);
+  opacity: 0;
+}
+.slide-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+@keyframes flash-correct {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(34, 197, 94, 0.2); }
+  100% { background-color: transparent; }
+}
+@keyframes flash-wrong {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(239, 68, 68, 0.3); }
+  100% { background-color: transparent; }
+}
+.flash-correct {
+  animation: flash-correct 0.3s ease;
+}
+.flash-wrong {
+  animation: flash-wrong 0.3s ease;
+}
+
+.daily-card {
+  @apply bg-white/80 backdrop-blur rounded-2xl p-5 sm:p-8 shadow-sm border border-zhixu-blue/10 hover:shadow-md transition-shadow flex flex-col;
+  min-height: 16rem;
+}
+@media (min-width: 640px) {
+  .daily-card {
+    min-height: 20rem;
+  }
+}
+
+/* Mobile table scroll */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Touch-friendly tap target */
+@media (max-width: 639px) {
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
